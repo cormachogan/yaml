@@ -1,0 +1,16 @@
+apiVersion: run.tanzu.vmware.com/v1alpha1
+kind: TanzuKubernetesCluster
+metadata:
+ name: tkg-cluster-01
+spec:
+ topology:
+   controlPlane:
+     count: 1
+     class: guaranteed-small
+     storageClass: vsan-default-storage-policy
+   workers:
+     count: 3
+     class: guaranteed-small
+     storageClass: vsan-default-storage-policy
+ distribution:
+   version: v1.16
