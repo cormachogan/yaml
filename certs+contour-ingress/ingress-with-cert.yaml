@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kuard
+  annotations:
+    kubernetes.io/ingress.class: "contour"    
+    cert-manager.io/cluster-issuer: "ca-issuer"
+
+spec:
+  defaultBackend:
+    service:
+      name: kuard
+      port:
+        number: 80
+  rules:
+  - host: kuard.corinternal.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kuard
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - kuard.corinternal.com
+    secretName: myapp-cert
