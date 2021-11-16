@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nfs-server
+  namespace: nfs-testing
+  labels:
+    app: nfssrvr
+spec:
+  serviceName: nfs-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nfssrvr
+  template:
+    metadata:
+      labels:
+        app: nfssrvr
+    spec:
+      containers:
+      - name: nfs-server
+        image: gcr.io/google_containers/volume-nfs:0.8
+        ports:
+          - name: nfs
+            containerPort: 2049
+          - name: mountd
+            containerPort: 20048
+          - name: rpcbind
+            containerPort: 111
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: nfs-export
+          mountPath: /exports
+  volumeClaimTemplates:
+  - metadata:
+      name: nfs-export
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nfs-sc
+      resources:
+        requests:
+          storage: 5Gi

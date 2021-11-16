@@ -1,0 +1,7 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: nfs-sc
+provisioner: csi.vsphere.vmware.com
+parameters:
+    storagePolicyName: R1 # change to a valid storage policy from your vSphere environment
