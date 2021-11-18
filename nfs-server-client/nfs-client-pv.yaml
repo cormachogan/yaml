@@ -9,5 +9,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: "XX.XX.XX.XX" # "Populate with IP Address from nfs-server.nfs-testing.svc.cluster.local"
+    server: "XX.XX.XX.XX" # "Populate with IP Address from NFS server export"
     path: "/exports"
